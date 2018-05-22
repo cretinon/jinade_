@@ -45,6 +45,10 @@ swarm_init :
 		/tmp/join_as_manager.sh ;\
 	fi
 
+install_portainer :
+	mkdir -p /docker/share/portainer/data
+	docker stack deploy -c portainer.yml portainer
+	
 # -- }}}
 
 # {{{ -- New SCV / OPSYS
