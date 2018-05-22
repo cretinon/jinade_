@@ -39,10 +39,10 @@ swarm_init :
 		echo "#!/bin/sh" > /tmp/join_as_manager.sh.tmp ;\
 		docker swarm join-token manager | grep join >> /tmp/join_as_manager.sh.tmp ;\
 		chmod +x /tmp/join_as_manager.sh.tmp ;\
-		scp /tmp/join_as_manager.sh.tmp $(SLAVE_IP):/tmp/ ;\
+		scp /tmp/join_as_manager.sh.tmp $(SLAVE_IP):/tmp/join_as_manager.sh ;\
 	else \
 		while [ ! -x /tmp/join_as_manager.sh ]; do echo "waiting swarm" ; sleep 10 ; done ;\
-		/tmp/join_as_manager.ss ;\
+		/tmp/join_as_manager.sh ;\
 	fi
 
 # -- }}}
