@@ -32,6 +32,9 @@ install_docker :
 	curl -sSL https://get.docker.com | sh 
 	curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 	chmod +x /usr/local/bin/docker-compose
+	sed -i /lib/systemd/system/docker.service -e 's/-H fd:\/\//-H tcp:\/\/0.0.0.0:4356 -H fd:\/\/ --experimental=true --metrics-addr=0.0.0.0:4999/'
+	systemctl daemon-reload
+	systemctl restart docker
 
 swarm_init :
 	if ifconfig | grep $(MASTER_IP) > /dev/null ; then \
