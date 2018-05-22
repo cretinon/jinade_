@@ -3,6 +3,7 @@
 # {{{ -- meta
 
 OPSYS            := jinade
+SVCNAME          := install
 
 USERNAME         := cretinon
 GITHUB_USER      := cretinon
@@ -14,11 +15,8 @@ EMAIL            := jacques@cretinon.fr
 
 all : build start
 
-build : 
-	if [ "$(DISTRIB)" = "alpine" ]; then make fetch; fi
-	echo "Building $(DISTRIB) for $(ARCH) from $(HOSTARCH)";
-	if [ "$(ARCH)" != "$(HOSTARCH)" ]; then make regbinfmt fetchqemu ; fi;
-	docker build $(BUILDFLAGS) $(CACHEFLAGS) $(PROXYFLAGS) .
+install_deb_pkg : 
+   apt-get update && apt-get upgrade && apt-get -y -q install --no-install-recommends net-tools lsof procps git curl ca-certificates bash emacs
 
 # -- }}}
 
