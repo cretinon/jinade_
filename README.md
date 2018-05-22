@@ -4,8 +4,15 @@
 
 
 
-Sources available on [Git Hub](https://github.com/cretinon/jinade_install) docker images available on [Docker Hub](https://hub.docker.com/r/cretinon/jinade_install/tags/) and build with [Travis-ci](https://travis-ci.org/cretinon/jinade_install)
-makefile and .travis.yml inspire by [Whoahinstall](https://github.com/woahinstall/)
+Sources available on [Git Hub](https://github.com/cretinon/jinade_install)
+
+* Debian :
+apt-get install git make
+mkdir git_clone
+cd git_clone
+git clone https://github.com/cretinon/jinade_install.git
+cd jinade_install
+make install_deb_pkg 
 
 
 

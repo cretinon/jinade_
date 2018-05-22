@@ -13,10 +13,8 @@ EMAIL            := jacques@cretinon.fr
 
 # {{{ -- docker targets
 
-all : build start
-
 install_deb_pkg : 
-   apt-get update && apt-get upgrade && apt-get -y -q install --no-install-recommends net-tools lsof procps git curl ca-certificates bash emacs
+	apt-get update && apt-get upgrade && apt-get -y -q install --no-install-recommends net-tools lsof procps git curl ca-certificates bash emacs make
 
 # -- }}}
 
