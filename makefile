@@ -51,7 +51,12 @@ swarm_init :
 install_portainer :
 	mkdir -p /docker/share/portainer/data
 	docker stack deploy -c portainer.yml portainer
-	
+
+install_gluster :
+	cd /root/git_clone && git clone https://github.com/cretinon/jinade_gluster.git && cd jinade_gluster && 	make ARCH=x86_64 DISTRIB=debian build
+	mkdir -p /glusterfs/data ; mkdir -p /glusterfs/metadata ; mkdir -p /glusterfs/etc
+	if [ $(NODE) = "master" ];then echo "127.0.0.1 gluster-1" > /glusterfs/etc/hosts ; echo "10.2.0.11 gluster-2" >> /glusterfs/etc/hosts ; else echo "127.0.0.1 gluster-2" > /glusterfs/etc/hosts ; echo "10.2.0.10 gluster-1" >> /glusterfs/etc/hosts ; fi 
+
 # -- }}}
 
 # {{{ -- New SCV / OPSYS
