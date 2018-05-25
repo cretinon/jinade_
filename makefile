@@ -53,7 +53,7 @@ install_portainer :
 	docker stack deploy -c portainer.yml portainer
 
 install_gluster :
-	cd /root/git_clone && git clone https://github.com/cretinon/jinade_gluster.git && cd jinade_gluster && 	make ARCH=x86_64 DISTRIB=debian build
+	cd /root/git_clone && git clone https://github.com/cretinon/jinade_gluster.git
 	mkdir -p /glusterfs/data ; mkdir -p /glusterfs/metadata ; mkdir -p /glusterfs/etc
 	if [ $(NODE) = "master" ];then \
 		echo "127.0.0.1 gluster-1" > /glusterfs/etc/hosts ; \
@@ -65,6 +65,22 @@ install_gluster :
 		echo "10.2.0.10 gluster-1" >> /glusterfs/etc/hosts ;  \
 		cd /root/git_clone/jinade_gluster ; \
 		make ARCH=x86_64 DISTRIB=debian IP=10.2.0.11 build start ; \
+	fi 
+
+ifeq "$(NODE)" "master"
+CONTARGS    := -j -v -c -d jinade.me -m --ns1 jinade1 --ipns1 217.182.142.201 -r
+else
+CONTARGS    := -j -v -c -d jinade.me -s -r
+endif
+
+install_bind :
+	cd /root/git_clone && git clone https://github.com/cretinon/jinade_bind9.git
+	if [ $(NODE) = "master" ];then \
+		cd /root/git_clone/jinade_bind9 ; \
+		make ARCH=x86_64 DISTRIB=debian IP=10.2.1.10 CONTARGS='$(CONTARGS)' build start ;\
+	else \
+		cd /root/git_clone/jinade_bind9 ; \
+		make ARCH=x86_64 DISTRIB=debian IP=10.2.1.11 CONTARGS='$(CONTARGS)' build start ; \
 	fi 
 
 # -- }}}
