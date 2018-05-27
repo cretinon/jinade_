@@ -78,6 +78,9 @@ install_bind :
 	if [ $(NODE) = "master" ];then \
 		cd /root/git_clone/jinade_bind9 ; \
 		make ARCH=x86_64 DISTRIB=debian IP=10.2.1.10 CONTARGS='$(CONTARGS)' build start ;\
+		sleep 5 ;\
+		make ARCH=x86_64 DISTRIB=debian EXECCOMMAND="/bin/bash -c '/usr/local/entrypoint.sh -v -j -d jinade.me -m -u NS -h jinade2.jinade.me -a 217.182.142.99'" eshell ;\
+		make ARCH=x86_64 DISTRIB=debian EXECCOMMAND="/bin/bash -c '/usr/local/entrypoint.sh -v -j -d jinade.me -m -u A -h jinade2.jinade.me -a 217.182.142.99'"  eshell ;\
 	else \
 		cd /root/git_clone/jinade_bind9 ; \
 		make ARCH=x86_64 DISTRIB=debian IP=10.2.1.11 CONTARGS='$(CONTARGS)' build start ; \
