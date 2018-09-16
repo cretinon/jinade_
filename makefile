@@ -18,8 +18,6 @@ install_deb_pkg :
 
 init_ssh :
 	ssh-keygen -q -t rsa -f /root/.ssh/id_rsa -N ""
-	echo "please add public key to other hosts .ssh/authorized_keys"
-	cat /root/.ssh/id_rsa.pub
 
 enable_swap :
 	dd if=/dev/zero of=/swap bs=1024 count=1024000
@@ -42,7 +40,8 @@ swarm_init :
 		echo "#!/bin/sh" > /tmp/join_as_manager.sh.tmp ;\
 		docker swarm join-token manager | grep join >> /tmp/join_as_manager.sh.tmp ;\
 		chmod +x /tmp/join_as_manager.sh.tmp ;\
-		scp /tmp/join_as_manager.sh.tmp $(SLAVE_IP):/tmp/join_as_manager.sh ;\
+		scp /tmp/join_as_manager.sh.tmp $(SLAVE1_IP):/tmp/join_as_manager.sh ;\
+		scp /tmp/join_as_manager.sh.tmp $(SLAVE2_IP):/tmp/join_as_manager.sh ;\
 	else \
 		while [ ! -x /tmp/join_as_manager.sh ]; do echo "waiting swarm" ; sleep 10 ; done ;\
 		/tmp/join_as_manager.sh ;\
