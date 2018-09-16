@@ -52,7 +52,7 @@ install_portainer :
 	docker stack deploy -c portainer.yml portainer
 
 install_gluster :
-	cd /root/git_clone && git clone https://github.com/cretinon/jinade_gluster.git
+	cd /git_clone && git clone https://github.com/cretinon/jinade_gluster.git
 	mkdir -p /glusterfs/data ; mkdir -p /glusterfs/metadata ; mkdir -p /glusterfs/etc
 	if [ $(NODE) = "master" ];then \
 		echo "127.0.0.1 gluster-1" > /glusterfs/etc/hosts ; \
