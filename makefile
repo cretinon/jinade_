@@ -57,12 +57,12 @@ install_gluster :
 	if [ $(NODE) = "master" ];then \
 		echo "127.0.0.1 gluster-1" > /glusterfs/etc/hosts ; \
 		echo "10.2.0.11 gluster-2" >> /glusterfs/etc/hosts ; \
-		cd /root/git_clone/jinade_gluster ; \
+		cd /git_clone/jinade_gluster ; \
 		make ARCH=x86_64 DISTRIB=debian IP=10.2.0.10 build start ;\
 	else \
 		echo "127.0.0.1 gluster-2" > /glusterfs/etc/hosts ; \
 		echo "10.2.0.10 gluster-1" >> /glusterfs/etc/hosts ;  \
-		cd /root/git_clone/jinade_gluster ; \
+		cd /git_clone/jinade_gluster ; \
 		make ARCH=x86_64 DISTRIB=debian IP=10.2.0.11 build start ; \
 	fi 
 
