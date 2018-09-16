@@ -35,7 +35,7 @@ install_docker :
 	systemctl restart docker
 
 swarm_init :
-	if ifconfig | grep $(MASTER_IP) > /dev/null ; then \
+	if ifconfig | grep -w $(MASTER_IP) > /dev/null ; then \
 		docker swarm init ; \
 		echo "#!/bin/sh" > /tmp/join_as_manager.sh.tmp ;\
 		docker swarm join-token manager | grep join >> /tmp/join_as_manager.sh.tmp ;\
