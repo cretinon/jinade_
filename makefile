@@ -64,7 +64,16 @@ install_gluster :
 		echo "10.2.0.10 gluster-1" >> /glusterfs/etc/hosts ;  \
 		cd /git_clone/jinade_gluster ; \
 		make ARCH=x86_64 DISTRIB=debian IP=10.2.0.11 build start ; \
-	fi 
+	fi
+
+install_swarmprom :
+	cd /git_clone && git clone https://github.com/stefanprodan/swarmprom.git && cd swarmprom
+	ADMIN_USER=admin \
+	ADMIN_PASSWORD=$(PASS_SLACK) \
+	SLACK_URL=$(SLACK_URL) \
+	SLACK_CHANNEL=devops-alerts \
+	SLACK_USER=jacques \
+	docker stack deploy -c docker-compose.yml mon
 
 ifeq "$(NODE)" "master"
 CONTARGS    := -j -v -c -d jinade.me -m --ns1 jinade1 --ipns1 217.182.142.201 -r
