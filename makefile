@@ -68,7 +68,7 @@ install_gluster :
 
 install_swarmprom :
 	cd /git_clone && git clone https://github.com/stefanprodan/swarmprom.git
-	cd swarmprom
+	cd /git_clone/swarmprom
 	ADMIN_USER=admin \
 	ADMIN_PASSWORD=$(PASS_SLACK) \
 	SLACK_URL=$(SLACK_URL) \
