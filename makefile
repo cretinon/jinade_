@@ -78,7 +78,7 @@ install_swarmprom :
 	
 install_percona :
 	docker network create -d overlay percona-net --attachable --subnet=10.3.0.0/24
-	docker service create --name mysql-percona --replicas 3 -p 3306:3306 --network precona-net \
+	docker service create --name mysql-percona --replicas 3 -p 3306:3306 --network percona-net \
 	--env MYSQL_ROOT_PASSWORD=$(PASS_PERCO) --env DISCOVERY_SERVICE=$($IP1):2379,$(IP2):2379,$(IP3):2379 \
 	--env XTRABACKUP_PASSWORD=$(PASS_PERCO) --env CLUSTER_NAME=my_wsrep_cluster \
 	perconalab/percona-xtradb-cluster:5.7
