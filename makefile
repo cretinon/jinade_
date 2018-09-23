@@ -76,19 +76,12 @@ install_swarmprom :
 	SLACK_USER=jacques \
 	docker stack deploy -c docker-compose.yml mon
 	
-install_mariadb :
-	cd /git_clone && git clone https://github.com/colinmollenhour/mariadb-galera-swarm.git
-	cd /git_clone/mariadb-galera-swarm/examples/swarm ; \
-	mkdir -p .secrets ; \
-	openssl rand -base64 32 > .secrets/xtrabackup_password ; \
-	openssl rand -base64 32 > .secrets/mysql_password ; \
-	openssl rand -base64 32 > .secrets/mysql_root_password ; \
-	docker stack deploy -c docker-compose.yml galera ; \
-	sleep 90 ; \
-	docker service scale galera_node=2 ; \
-	sleep 90 ; \
-	docker service scale galera_seed=0 ; \
-	docker service scale galera_node=3
+install_percona :
+	docker network create -d overlay percona-net --attachable --subnet=10.3.0.0/24
+	docker service create --name mysql-percona --replicas 3 -p 3306:3306 --network precona-net \
+	--env MYSQL_ROOT_PASSWORD=$(PASS_PERCO) --env DISCOVERY_SERVICE=$($IP1):2379,$(IP2):2379,$(IP3):2379 \
+	--env XTRABACKUP_PASSWORD=$(PASS_PERCO) --env CLUSTER_NAME=my_wsrep_cluster \
+	perconalab/percona-xtradb-cluster:5.7
 
 ifeq "$(NODE)" "master"
 CONTARGS    := -j -v -c -d jinade.me -m --ns1 jinade1 --ipns1 217.182.142.201 -r
